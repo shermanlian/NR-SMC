@@ -1,4 +1,4 @@
-<h1 align="center">Test-Time Scaling of Text-to-Image Flow Matching Models<br>with Noise-Rejuvenated Sequential Monte Carlo</h1>
+<h2 align="center">Test-Time Scaling of Text-to-Image Flow Matching Models<br>with Noise-Rejuvenated Sequential Monte Carlo</h2>
 
 <p align="center">
   <a>arXiv (tbu)</a>
