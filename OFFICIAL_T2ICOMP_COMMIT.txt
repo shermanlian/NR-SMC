@@ -1,0 +1,4 @@
+Repository: https://github.com/Karine-Huang/T2I-CompBench
+Commit: 1b7094991a57f3c22abdd4f6e8ba6c1a15517073
+Commit date: 2026-05-07 15:04:30 +0800
+Only the official BLIPvqa_eval implementation is vendored for isolated evaluation.

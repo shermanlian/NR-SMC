@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+#SBATCH -p gpu
+#SBATCH -N 1
+#SBATCH --gpus=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=128G
+#SBATCH -t 0-10:00:00
+#SBATCH --job-name=tmlr-sd3-ge-ours-s0
+#SBATCH --output=logs/%x-%j.out
+
+set -euo pipefail
+
+SCRIPT_DIR="${SCRIPT_DIR:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)}"
+ENV_PREFIX="${ENV_PREFIX:?Set ENV_PREFIX to your inference environment}"
+CACHE_ROOT="${CACHE_ROOT:-${XDG_CACHE_HOME:-$HOME/.cache}}"
+
+export HF_HOME="$CACHE_ROOT/huggingface"
+export HPS_ROOT="$CACHE_ROOT/hpsv2"
+export TORCH_HOME="$CACHE_ROOT/torch"
+export XDG_CACHE_HOME="$CACHE_ROOT"
+export MPLCONFIGDIR="$CACHE_ROOT/matplotlib"
+export PIP_CACHE_DIR="${PIP_CACHE_DIR:-$CACHE_ROOT/pip}"
+export TOKENIZERS_PARALLELISM=false
+export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-8}"
+
+mkdir -p "$HF_HOME" "$HPS_ROOT" "$TORCH_HOME" "$MPLCONFIGDIR" "$SCRIPT_DIR/logs" "$SCRIPT_DIR/runs"
+cd "$SCRIPT_DIR"
+
+EXPERIMENT_NAME=${EXPERIMENT_NAME:-sd3_geneval__ours_n04_s050_la07__seed00}
+
+echo "START TIME: $(date)"
+echo "EXPERIMENT: $EXPERIMENT_NAME"
+echo "SLURM JOB: ${SLURM_JOB_ID:-none}"
+echo "HOST: $(hostname)"
+
+"$ENV_PREFIX/bin/python" "$SCRIPT_DIR/launch_geneval_runs.py" --model_name "sd3" \
+--use_smc --lmbda=10.0 --resample_frequency=5 --resample_t_start=5 --resample_t_end=35 \
+--num_particles=4 --num_inference_steps=50 --adaptive_resampling --rejuvenation --look_ahead \
+--metrics_to_compute ImageReward --seed 0 \
+--run_root "$SCRIPT_DIR/runs" --experiment_name "$EXPERIMENT_NAME" "$@"
+
+echo "END TIME: $(date)"
