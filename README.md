@@ -4,8 +4,8 @@ Models with Noise-Rejuvenated Sequential Monte Carlo
 </h1>
 
 <p align="center">
-  <a>arXiv (tbu)</a>
-  <!-- Add the arXiv URL to the link above when available. -->
+  <a href="https://openreview.net/forum?id=HoQBaPXhKk">OpenReview</a>
+  
 </p>
 
 > **NR-SMC** guides pretrained text-to-image flow matching models toward higher-reward images by maintaining multiple sampling trajectories. It resamples promising particles and refreshes their source noise so that duplicated particles can explore different paths, without additional training or reward gradients.
