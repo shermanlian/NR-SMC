@@ -191,7 +191,14 @@ If you find this work useful, please cite:
 
 ```bibtex
 @article{
-tbu
+lian2026testtime,
+title={Test-Time Scaling of Text-to-Image Flow Matching Models with Noise-Rejuvenated Sequential Monte Carlo},
+author={Wenyi Lian and Zheng Zhao and Thomas B. Sch{\"o}n},
+journal={Transactions on Machine Learning Research},
+issn={2835-8856},
+year={2026},
+url={https://openreview.net/forum?id=HoQBaPXhKk},
+note={}
 }
 ```
 
